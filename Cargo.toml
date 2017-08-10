@@ -1,0 +1,14 @@
+[package]
+name = "devd-rs"
+version = "0.1.0"
+authors = [ "Greg V <greg@unrelenting.technology>" ]
+keywords = [ "System", "FreeBSD" ]
+description = "An interface to FreeBSD's devd"
+license = "Unlicense"
+readme = "README.md"
+homepage = "https://github.com/myfreeweb/devd-rs"
+repository = "https://github.com/myfreeweb/devd-rs"
+
+[dependencies]
+nix = "0.9"
+nom = "3.2"
