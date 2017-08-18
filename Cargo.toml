@@ -12,3 +12,4 @@ repository = "https://github.com/myfreeweb/devd-rs"
 [dependencies]
 nix = "0.9"
 nom = "3.2"
+libc = "0"

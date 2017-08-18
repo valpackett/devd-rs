@@ -5,6 +5,8 @@ use devd_rs::*;
 fn main() {
     let mut ctx = Context::new().unwrap();
     loop {
-        println!("{:?}", ctx.wait_for_event().unwrap());
+        if let Ok(ev) = ctx.wait_for_event(1000) {
+            println!("{:?}", ev);
+        }
     }
 }
