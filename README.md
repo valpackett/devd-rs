@@ -2,7 +2,7 @@
 
 A Rust library for listening to FreeBSD [devd](https://www.freebsd.org/cgi/man.cgi?devd)'s device attach-detach notifications.
 
-Listens on `/var/run/devd.seqpacket.pipe` using kqueue ([nix](https://github.com/nix-rust/nix) wrapper) and parses messages using [nom](https://github.com/Geal/nom).
+Listens on `/var/run/devd.seqpacket.pipe` and parses messages using [nom](https://github.com/Geal/nom).
 
 ## Usage
 
