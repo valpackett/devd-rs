@@ -1,4 +1,7 @@
-# devd-rs [![unlicense](https://img.shields.io/badge/un-license-green.svg?style=flat)](http://unlicense.org)
+[![crates.io](https://img.shields.io/crates/v/systemstat.svg)](https://crates.io/crates/systemstat)
+[![unlicense](https://img.shields.io/badge/un-license-green.svg?style=flat)](http://unlicense.org)
+
+# devd-rs
 
 A Rust library for listening to FreeBSD [devd](https://www.freebsd.org/cgi/man.cgi?devd)'s device attach-detach notifications.
 
