@@ -7,7 +7,7 @@ pub struct Error(io::Error);
 impl Into<io::Error> for Error {
     fn into(self) -> io::Error {
         match self {
-            Error(e) => e
+            Error(e) => e,
         }
     }
 }

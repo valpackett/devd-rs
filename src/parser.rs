@@ -3,14 +3,12 @@ use nom::{alphanumeric, multispace};
 pub use nom::IResult;
 use data::*;
 
-named!(key <&str>, map_res!(alphanumeric, str::from_utf8));
+named!(key<&str>, map_res!(alphanumeric, str::from_utf8));
 
-named!(val <&str>,
-       alt!(
-           delimited!(char!('"'), map_res!( take_while!(call!(|c| c != '"' as u8)), str::from_utf8), char!('"'))
-           | map_res!( take_while!(call!(|c| c != '\n' as u8 && c != ' ' as u8)), str::from_utf8)
-           )
-      );
+named!(
+    val<&str>,
+    alt!(delimited!(char!('"'), map_res!(take_while!(call!(|c| c != '"' as u8)), str::from_utf8), char!('"')) | map_res!(take_while!(call!(|c| c != '\n' as u8 && c != ' ' as u8)), str::from_utf8))
+);
 
 named!(keyval <&[u8], (String, String)>,
    do_parse!(
@@ -99,12 +97,18 @@ mod tests {
         data.insert("vendor", "0x1050");
         data.insert("sernum", "");
         data.insert("mode", "host");
-        assert_eq!(res, IResult::Done(&b""[..], Event::Notify {
-            system: "USB".to_owned(),
-            subsystem: "INTERFACE".to_owned(),
-            kind: "ATTACH".to_owned(),
-            data: data.to_owned()
-        }))
+        assert_eq!(
+            res,
+            IResult::Done(
+                &b""[..],
+                Event::Notify {
+                    system: "USB".to_owned(),
+                    subsystem: "INTERFACE".to_owned(),
+                    kind: "ATTACH".to_owned(),
+                    data: data.to_owned(),
+                }
+            )
+        )
     }
 
     #[test]
@@ -114,11 +118,17 @@ mod tests {
         let mut data = BTreeMap::new();
         data.insert("bus", "0");
         data.insert("sernum", "");
-        assert_eq!(res, IResult::Done(&b""[..], Event::Attach {
-            dev: "uhid1".to_owned(),
-            parent: data.to_owned(),
-            location: "uhub1".to_owned()
-        }))
+        assert_eq!(
+            res,
+            IResult::Done(
+                &b""[..],
+                Event::Attach {
+                    dev: "uhid1".to_owned(),
+                    parent: data.to_owned(),
+                    location: "uhub1".to_owned(),
+                }
+            )
+        )
     }
 
     #[test]
@@ -126,11 +136,17 @@ mod tests {
         let txt = b"-uhid1 at  on uhub1";
         let res = event(txt);
         let data = BTreeMap::new();
-        assert_eq!(res, IResult::Done(&b""[..], Event::Detach {
-            dev: "uhid1".to_owned(),
-            parent: data.to_owned(),
-            location: "uhub1".to_owned()
-        }))
+        assert_eq!(
+            res,
+            IResult::Done(
+                &b""[..],
+                Event::Detach {
+                    dev: "uhid1".to_owned(),
+                    parent: data.to_owned(),
+                    location: "uhub1".to_owned(),
+                }
+            )
+        )
     }
 
     #[test]
@@ -139,10 +155,10 @@ mod tests {
         let res = event(txt);
         let mut data = BTreeMap::new();
         data.insert("bus", "0");
-        assert_eq!(res, IResult::Done(&b""[..], Event::Nomatch {
-            parent: data.to_owned(),
-            location: "uhub1".to_owned()
-        }))
+        assert_eq!(
+            res,
+            IResult::Done(&b""[..], Event::Nomatch { parent: data.to_owned(), location: "uhub1".to_owned() })
+        )
     }
 
 }
