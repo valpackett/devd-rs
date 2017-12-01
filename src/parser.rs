@@ -93,10 +93,10 @@ mod tests {
         let txt = b"!system=USB subsystem=INTERFACE type=ATTACH ugen=ugen0.2 vendor=0x1050 sernum=\"\" mode=host\n";
         let res = event(txt);
         let mut data = BTreeMap::new();
-        data.insert("ugen", "ugen0.2");
-        data.insert("vendor", "0x1050");
-        data.insert("sernum", "");
-        data.insert("mode", "host");
+        data.insert("ugen".to_owned(), "ugen0.2".to_owned());
+        data.insert("vendor".to_owned(), "0x1050".to_owned());
+        data.insert("sernum".to_owned(), "".to_owned());
+        data.insert("mode".to_owned(), "host".to_owned());
         assert_eq!(
             res,
             IResult::Done(
@@ -105,7 +105,7 @@ mod tests {
                     system: "USB".to_owned(),
                     subsystem: "INTERFACE".to_owned(),
                     kind: "ATTACH".to_owned(),
-                    data: data.to_owned(),
+                    data: data,
                 }
             )
         )
@@ -116,15 +116,15 @@ mod tests {
         let txt = b"+uhid1 at bus=0 sernum=\"\" on uhub1";
         let res = event(txt);
         let mut data = BTreeMap::new();
-        data.insert("bus", "0");
-        data.insert("sernum", "");
+        data.insert("bus".to_owned(), "0".to_owned());
+        data.insert("sernum".to_owned(), "".to_owned());
         assert_eq!(
             res,
             IResult::Done(
                 &b""[..],
                 Event::Attach {
                     dev: "uhid1".to_owned(),
-                    parent: data.to_owned(),
+                    parent: data,
                     location: "uhub1".to_owned(),
                 }
             )
@@ -154,10 +154,10 @@ mod tests {
         let txt = b"? at bus=0 on uhub1";
         let res = event(txt);
         let mut data = BTreeMap::new();
-        data.insert("bus", "0");
+        data.insert("bus".to_owned(), "0".to_owned());
         assert_eq!(
             res,
-            IResult::Done(&b""[..], Event::Nomatch { parent: data.to_owned(), location: "uhub1".to_owned() })
+            IResult::Done(&b""[..], Event::Nomatch { parent: data, location: "uhub1".to_owned() })
         )
     }
 
