@@ -19,6 +19,13 @@ pub use data::*;
 
 const SOCKET_PATH: &'static str = "/var/run/devd.seqpacket.pipe";
 
+pub fn parse_devd_event(e: String) -> Result<Event> {
+    match parser::event(e.as_bytes()) {
+        parser::IResult::Done(_, x) => Ok(x),
+        _ => Err(Error::from(io::Error::new(io::ErrorKind::Other, "devd parse error")))
+    }
+}
+
 #[derive(Debug)]
 pub struct Context {
     sock: BufReader<UnixStream>,
@@ -35,6 +42,7 @@ impl Context {
         })
     }
 
+    /// Waits for an event using poll(), reads it but does not parse
     pub fn wait_for_event_raw(&mut self, timeout_ms: usize) -> Result<String> {
         let mut fds = vec![
             pollfd {
@@ -53,12 +61,22 @@ impl Context {
         }
     }
 
+    /// Waits for an event using poll(), reads and parses it
     pub fn wait_for_event<'a>(&mut self, timeout_ms: usize) -> Result<Event> {
-        self.wait_for_event_raw(timeout_ms).and_then(|e| {
-            match parser::event(e.as_bytes()) {
-                parser::IResult::Done(_, x) => Ok(x),
-                _ => Err(Error::from(io::Error::new(io::ErrorKind::Other, "devd parse error")))
-            }
-        })
+        self.wait_for_event_raw(timeout_ms).and_then(parse_devd_event)
     }
+
+    /// Returns the devd socket file descriptor in case you want to select/poll on it together with
+    /// other file descriptors
+    pub fn fd(&self) -> RawFd {
+        self.sockfd
+    }
+
+    /// Reads an event and parses it. Use when polling on the raw fd by yourself
+    pub fn read_event(&mut self) -> Result<Event> {
+        let mut s = String::new();
+        let _ = self.sock.read_line(&mut s);
+        parse_devd_event(s)
+    }
+
 }
