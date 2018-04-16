@@ -3,7 +3,7 @@
 
 # devd-rs
 
-A Rust library for listening to FreeBSD [devd](https://www.freebsd.org/cgi/man.cgi?devd)'s device attach-detach notifications.
+A Rust library for listening to FreeBSD (also DragonFlyBSD) [devd](https://www.freebsd.org/cgi/man.cgi?devd)'s device attach-detach notifications.
 
 Listens on `/var/run/devd.seqpacket.pipe` and parses messages using [nom](https://github.com/Geal/nom).
 

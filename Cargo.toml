@@ -1,10 +1,10 @@
 [package]
 name = "devd-rs"
-version = "0.1.0"
+version = "0.2.0"
 authors = [ "Greg V <greg@unrelenting.technology>" ]
-keywords = [ "System", "FreeBSD", "devd", "hotplug" ]
+keywords = [ "System", "FreeBSD", "DragonFlyBSD", "devd", "hotplug" ]
 categories = [ "os::unix-apis" ]
-description = "An interface to FreeBSD's devd"
+description = "An interface to devd, the device hotplug daemon on FreeBSD and DragonFlyBSD"
 license = "Unlicense"
 readme = "README.md"
 homepage = "https://github.com/myfreeweb/devd-rs"
