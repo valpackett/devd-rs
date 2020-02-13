@@ -1,13 +1,11 @@
-use nom::character::complete::{alphanumeric1, char, multispace1};
-use nom::branch::alt;
-use nom::sequence::delimited;
-use nom::bytes::complete::take_while;
 use data::*;
+use nom::branch::alt;
+use nom::bytes::complete::take_while;
+use nom::character::complete::{alphanumeric1, char, multispace1};
+use nom::sequence::delimited;
 
 fn val(i: &str) -> nom::IResult<&str, &str> {
-    alt((delimited(char('"'), take_while(|c| c != '"'), char('"')),
-         take_while(|c| c!= '\n' && c != ' ')
-        ))(i)
+    alt((delimited(char('"'), take_while(|c| c != '"'), char('"')), take_while(|c| c != '\n' && c != ' ')))(i)
 }
 
 named!(keyval <&str, (&str, &str)>,
@@ -155,10 +153,6 @@ mod tests {
         let mut data = BTreeMap::new();
         data.insert("bus".to_owned(), "0".to_owned());
 
-        assert_eq!(
-            res,
-            Ok(("", Event::Nomatch { parent: data, location: "uhub1".to_owned() }))
-        )
+        assert_eq!(res, Ok(("", Event::Nomatch { parent: data, location: "uhub1".to_owned() })))
     }
-
 }
