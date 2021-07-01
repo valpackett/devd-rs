@@ -7,8 +7,8 @@ categories = [ "os::unix-apis" ]
 description = "An interface to devd, the device hotplug daemon on FreeBSD and DragonFlyBSD"
 license = "Unlicense/MIT"
 readme = "README.md"
-homepage = "https://github.com/myfreeweb/devd-rs"
-repository = "https://github.com/myfreeweb/devd-rs"
+homepage = "https://github.com/unrelentingtech/devd-rs"
+repository = "https://github.com/unrelentingtech/devd-rs"
 
 [dependencies]
 nom = { version = "6", default-features = false, features = ["std"] }
