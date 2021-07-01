@@ -1,6 +1,6 @@
 [package]
 name = "devd-rs"
-version = "0.3.1"
+version = "0.3.2"
 authors = [ "Greg V <greg@unrelenting.technology>" ]
 keywords = [ "System", "FreeBSD", "DragonFlyBSD", "devd", "hotplug" ]
 categories = [ "os::unix-apis" ]
