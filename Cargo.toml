@@ -9,7 +9,9 @@ license = "Unlicense/MIT"
 readme = "README.md"
 homepage = "https://github.com/unrelentingtech/devd-rs"
 repository = "https://github.com/unrelentingtech/devd-rs"
+edition = "2018"
 
 [dependencies]
-nom = { version = "6", default-features = false, features = ["std"] }
 libc = "0"
+nom = { version = "7", default-features = false, features = ["std"] }
+nom-supreme = "0.6.0"
